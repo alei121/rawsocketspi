@@ -128,13 +128,4 @@ public class RawSocket implements ByteChannel, GatheringByteChannel {
     public static String[] getInterfaceNames() {
     	return nativeGetInterfaceNames();
     }
-    
-	public static void loadLib(String filename) throws IOException {
-		InputStream in = RawSocket.class.getClassLoader()
-				.getResourceAsStream(filename);
-		File file = File.createTempFile("tmp-rawsocketspi-jni-", "-so");
-		file.deleteOnExit();
-		Files.copy(in, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
-		System.load(file.getAbsolutePath());
-	}
 }
