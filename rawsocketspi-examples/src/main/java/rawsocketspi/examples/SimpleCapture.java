@@ -7,7 +7,7 @@ import java.util.Formatter;
 import rawsocketspi.RSSelectorProvider;
 import rawsocketspi.RSSocketAddress;
 
-public class PrintPacket {
+public class SimpleCapture {
 	private static String bbToString(ByteBuffer bb, String divider, int count) {
 		StringBuilder sb = new StringBuilder();
 		Formatter formatter = new Formatter(sb);
