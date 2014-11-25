@@ -7,6 +7,12 @@ import java.util.Formatter;
 import rawsocketspi.RSSelectorProvider;
 import rawsocketspi.RSSocketAddress;
 
+/**
+ * A simple packet capture application.
+ * Prints dst mac, src mac and content.
+ * 
+ * @author Alan Lei
+ */
 public class SimpleCapture {
 	private static String bbToString(ByteBuffer bb, String divider, int count) {
 		StringBuilder sb = new StringBuilder();

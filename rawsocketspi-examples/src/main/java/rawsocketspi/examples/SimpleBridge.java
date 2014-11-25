@@ -9,6 +9,13 @@ import java.util.List;
 import rawsocketspi.RSSelectorProvider;
 import rawsocketspi.RSSocketAddress;
 
+/**
+ * A very simple bridge that simply send packets from
+ * one network interface to others.
+ * There is no mac learning or loop detection.
+ * 
+ * @author Alan Lei
+ */
 public class SimpleBridge {
 	List<DatagramChannel> channels = new ArrayList<DatagramChannel>();
 	List<BridgeLink> bridgeLinks = new ArrayList<>();
