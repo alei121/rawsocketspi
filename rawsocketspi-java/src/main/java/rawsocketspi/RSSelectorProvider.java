@@ -9,6 +9,12 @@ import java.nio.channels.SocketChannel;
 import java.nio.channels.spi.AbstractSelector;
 import java.nio.channels.spi.SelectorProvider;
 
+/**
+ * Java SPI provider for RawSocket.
+ * Only supported method is openDatagramChannel
+ * 
+ * @author Alan Lei
+ */
 public class RSSelectorProvider extends SelectorProvider {
 
 	@Override

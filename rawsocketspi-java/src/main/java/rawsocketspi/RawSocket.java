@@ -9,6 +9,12 @@ import java.nio.channels.GatheringByteChannel;
 import java.nio.file.Files;
 import java.nio.file.StandardCopyOption;
 
+/**
+ * This interacts with the native code,
+ * supporting the basic open/close and read/write.
+ * 
+ * @author Alan Lei
+ */
 public class RawSocket implements ByteChannel, GatheringByteChannel {
     public static native void nativeInit();
     public static native int nativeOpen(String ifName);

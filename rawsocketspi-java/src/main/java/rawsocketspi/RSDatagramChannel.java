@@ -12,6 +12,12 @@ import java.nio.channels.MembershipKey;
 import java.nio.channels.spi.SelectorProvider;
 import java.util.Set;
 
+/**
+ * This implements the Java DatagramChannel for the RawSocket SPI.
+ * The implementation leans towards the use of threads instead of nonblocking selector.
+ * 
+ * @author Alan Lei
+ */
 public class RSDatagramChannel extends DatagramChannel {
 	private RawSocket socket;
 	private RSSocketAddress address;
