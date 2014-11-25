@@ -31,21 +31,18 @@
 // For getifaddrs
 #include <ifaddrs.h>
 
-// epoll
-#include <sys/epoll.h>
-
 // #include <net/bpf.h>
 // trying pcap.h this for bpf constants
 // #include <pcap.h>
 
-#include "rawsocketspi_RawSocket.h"
+#include "com_github_alei121_rawsocketspi_RawSocket.h"
 
-JNIEXPORT void JNICALL Java_rawsocketspi_RawSocket_nativeInit
+JNIEXPORT void JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeInit
   (JNIEnv *env, jclass cls)
 {
 }
 
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeOpen
+JNIEXPORT jint JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeOpen
   (JNIEnv *env, jclass cls, jstring intf)
 {
 	const char *ifname;
@@ -150,7 +147,7 @@ JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeOpen
 }
 
 
-JNIEXPORT void JNICALL Java_rawsocketspi_RawSocket_nativeClose
+JNIEXPORT void JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeClose
   (JNIEnv *env, jclass cls, jint sd)
 {
 	struct ifreq ethreq;
@@ -185,7 +182,7 @@ JNIEXPORT void JNICALL Java_rawsocketspi_RawSocket_nativeClose
 	close(sd);
 }
 
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeRead
+JNIEXPORT jint JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeRead
   (JNIEnv *env, jclass cls, jint sd, jobject bb, jint offset, jint length)
 {
 	char *buffer = (*env)->GetDirectBufferAddress(env, bb);
@@ -197,7 +194,7 @@ JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeRead
 	return len;
 }
 
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeWrite
+JNIEXPORT jint JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeWrite
   (JNIEnv *env, jclass cls, jint sd, jobject bb, jint offset, jint length)
 {
 	char *buffer = (*env)->GetDirectBufferAddress(env, bb);
@@ -205,7 +202,7 @@ JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeWrite
 	return send(sd, buffer + offset, length, 0);
 }
 
-JNIEXPORT jobjectArray JNICALL Java_rawsocketspi_RawSocket_nativeGetInterfaceNames
+JNIEXPORT jobjectArray JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeGetInterfaceNames
   (JNIEnv *env, jclass obj)
 {
     jobjectArray jb;
@@ -244,7 +241,7 @@ JNIEXPORT jobjectArray JNICALL Java_rawsocketspi_RawSocket_nativeGetInterfaceNam
     return jb;
 }
 
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeGetHardwareAddress
+JNIEXPORT jint JNICALL Java_com_github_alei121_rawsocketspi_RawSocket_nativeGetHardwareAddress
   (JNIEnv *env, jclass obj, jint sd, jobject bb)
 {
 	char *buffer = (*env)->GetDirectBufferAddress(env, bb);
@@ -272,86 +269,4 @@ JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeGetHardwareAddress
 	}
 
 	return sll.sll_halen;
-}
-
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeEpollCreate
-  (JNIEnv *env, jclass obj, jint size)
-{
-	return epoll_create(size);
-}
-
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeEpollCreate1
-  (JNIEnv *env, jclass obj, jint flag)
-{
-	return epoll_create1(flag);
-}
-
-static int _java_epollop_to_c(jint op)
-{
-	// Must match constants in Java
-	switch (op) {
-	case 1: return EPOLL_CTL_ADD;
-	case 2: return EPOLL_CTL_MOD;
-	case 3: return EPOLL_CTL_DEL;
-	}
-	return -1;
-}
-
-static void _epoll_event_java_to_c(JNIEnv *env, jobject jevent, struct epoll_event *event)
-{
-	  jclass cls = (*env)->FindClass(env, "rawsocketspi/RawSocket$EpollEvent");
-	  jfieldID eventsID = (*env)->GetFieldID(env, cls, "events", "I");
-	  jfieldID dataID = (*env)->GetFieldID(env, cls, "data", "J");
-
-	  // Events. Must match constants in Java
-	  jint events = (*env)->GetIntField(env, jevent, eventsID);
-	  if (events & 1) event->events |= EPOLLIN;
-	  if (events & 2) event->events |= EPOLLOUT;
-	  if (events & 4) event->events |= EPOLLET;
-
-	  // Data
-	  event->data.u64 = (*env)->GetIntField(env, jevent, dataID);
-}
-
-static void _epoll_event_c_to_java(JNIEnv *env, struct epoll_event *event, jobject jevent)
-{
-	  jclass cls = (*env)->FindClass(env, "rawsocketspi/RawSocket$EpollEvent");
-	  jfieldID eventsID = (*env)->GetFieldID(env, cls, "events", "I");
-	  jfieldID dataID = (*env)->GetFieldID(env, cls, "data", "J");
-
-	  // Events. Must match constants in Java
-	  int events  = 0;
-	  if (event->events & EPOLLIN) events |= 1;
-	  if (event->events & EPOLLOUT) events |= 2;
-	  if (event->events & EPOLLET) events |= 4;
-	  (*env)->SetIntField(env, jevent, eventsID, events);
-
-	  (*env)->SetIntField(env, jevent, dataID, event->data.u64);
-}
-
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeEpollCtl
-  (JNIEnv *env, jclass obj, jint epfd, jint op, jint fd, jobject jevent)
-{
-	struct epoll_event event;
-	_epoll_event_java_to_c(env, jevent, &event);
-	return epoll_ctl(epfd, _java_epollop_to_c(op), fd, &event);
-}
-
-JNIEXPORT jint JNICALL Java_rawsocketspi_RawSocket_nativeEpollWait
-  (JNIEnv *env, jclass obj, jint epfd, jobjectArray jevents, jint maxevents, jint timeout)
-{
-	int i;
-	struct epoll_event events[maxevents];
-	jsize jevents_count = (*env)->GetArrayLength(env, jevents);
-	if (jevents_count < maxevents) return -1;
-
-	int count = epoll_wait(epfd, events, maxevents, timeout);
-	if (count == -1) return -1;
-
-	for (i = 0; i < count; i++) {
-		jobject jevent = (*env)->GetObjectArrayElement(env, jevents, i);
-		_epoll_event_c_to_java(env, &(events[i]), jevent);
-	}
-
-	return count;
 }
