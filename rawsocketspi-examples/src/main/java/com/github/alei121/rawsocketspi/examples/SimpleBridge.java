@@ -1,4 +1,4 @@
-package rawsocketspi.examples;
+package com.github.alei121.rawsocketspi.examples;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -6,8 +6,8 @@ import java.nio.channels.DatagramChannel;
 import java.util.ArrayList;
 import java.util.List;
 
-import rawsocketspi.RSSelectorProvider;
-import rawsocketspi.RSSocketAddress;
+import com.github.alei121.rawsocketspi.RSSelectorProvider;
+import com.github.alei121.rawsocketspi.RSSocketAddress;
 
 /**
  * A very simple bridge that simply send packets from

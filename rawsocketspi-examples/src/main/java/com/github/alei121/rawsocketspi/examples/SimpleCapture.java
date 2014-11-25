@@ -1,11 +1,11 @@
-package rawsocketspi.examples;
+package com.github.alei121.rawsocketspi.examples;
 
 import java.nio.ByteBuffer;
 import java.nio.channels.DatagramChannel;
 import java.util.Formatter;
 
-import rawsocketspi.RSSelectorProvider;
-import rawsocketspi.RSSocketAddress;
+import com.github.alei121.rawsocketspi.RSSelectorProvider;
+import com.github.alei121.rawsocketspi.RSSocketAddress;
 
 /**
  * A simple packet capture application.
