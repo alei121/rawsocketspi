@@ -1,4 +1,4 @@
-package rawsocketspi;
+package com.github.alei121.rawsocketspi;
 
 import java.net.SocketAddress;
 

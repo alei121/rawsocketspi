@@ -1,4 +1,4 @@
-package rawsocketspi;
+package com.github.alei121.rawsocketspi;
 
 import java.io.IOException;
 import java.net.ProtocolFamily;
