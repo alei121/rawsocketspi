@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>com.github.alei121</groupId>
 		<artifactId>rawsocketspi-parent</artifactId>
-		<version>1.0-SNAPSHOT</version>
+		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>..</relativePath>
 	</parent>
 
@@ -15,6 +15,26 @@
 	<name>RawSocket SPI distribution</name>
 	<description>Linux raw socket via Java DatagramChannel</description>
 	<url>http://github.com/alei121</url>
+
+	<licenses>
+		<license>
+			<name>The Apache License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+		</license>
+	</licenses>
+
+	<developers>
+		<developer>
+			<name>Alan Lei</name>
+			<email>alanlei@gmail.com</email>
+		</developer>
+	</developers>
+
+	<scm>
+		<connection>scm:git:https://github.com/alei121/rawsocketspi.git</connection>
+		<developerConnection>scm:git:https://github.com/alei121/rawsocketspi.git</developerConnection>
+		<url>https://github.com/alei121/rawsocketspi.git</url>
+	</scm>
 
 	<build>
 		<plugins>
@@ -46,11 +66,11 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>rawsocketspi</groupId>
+			<groupId>com.github.alei121</groupId>
 			<artifactId>rawsocketspi-java</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>rawsocketspi</groupId>
+			<groupId>com.github.alei121</groupId>
 			<artifactId>rawsocketspi-jni</artifactId>
 			<type>so</type>
 		</dependency>
