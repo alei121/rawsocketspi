@@ -3,7 +3,7 @@
 
 	<groupId>com.github.alei121</groupId>
 	<artifactId>rawsocketspi-parent</artifactId>
-	<version>1.0.0</version>
+	<version>1.0.1-SNAPSHOT</version>
 
 	<packaging>pom</packaging>
 
@@ -29,7 +29,7 @@
 		<connection>scm:git:https://github.com/alei121/rawsocketspi.git</connection>
 		<developerConnection>scm:git:https://github.com/alei121/rawsocketspi.git</developerConnection>
 		<url>https://github.com/alei121/rawsocketspi.git</url>
-	  <tag>rawsocketspi-parent-1.0.0</tag>
+	  <tag>HEAD</tag>
   </scm>
 
 	<dependencyManagement>
