@@ -5,7 +5,8 @@ Java SPI for raw socket
 
 Support for Linux raw socket only, the library uses Java SPI to provide easy access to network packet data via Java DatagramChannel.
 
-Example usage:
+Usage
+---
 ```java
   import java.nio.channels.DatagramChannel;
   import com.github.alei121.rawsocketspi.RSSelectorProvider;
@@ -18,7 +19,8 @@ Example usage:
 	channel.bind(address);
 ```
 
-Maven:
+Maven
+---
 ```xml
 <dependency>
 	<groupId>com.github.alei121</groupId>
@@ -28,19 +30,20 @@ Maven:
 </dependency>
 ```
 
-Development requires:
-* Linux
-* Maven
-* JDK 7
-* gcc
 
-Test setup:
-...
+Test setup
+---
+Testing was done in VMWare Fusion:
+* 2 custom networks vmnet2 and vmnet3 (no dhcp, no nat, no host connect)
+* 1 VM running Ubuntu 1G RAM 20G disk for build and run (add vmnet2 and vmnet3)
+* 2 VMs running Ubuntu 512G RAM for testing (one on vmnet2, one on vmnet3)
 
-
+For reference my environment is:
+* VMWare Fusion 7.1.0
+* Ubuntu 14.04 and 12.04
+* OpenJDK 7
 
 ---
-
 To run examples on Ubuntu with openjdk:
 
 `mvn clean install`
