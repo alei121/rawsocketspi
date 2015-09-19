@@ -30,6 +30,17 @@ Maven
 </dependency>
 ```
 
+Blocking read/write only, no selector
+---
+rawsocketspi only implements blocking read/write.
+
+With better CPUs, OSs, VMs..., computer systems are now more capable of handling large number of threads.
+For raw socket, even using one thread per port, the number of threads is still small because the number of physical network ports are limited by hardware and space.
+The intention of socket selector was to reduce the number of threads, in which it seems unnecessary in this case.
+
+It is the author believes that application implementation should take the simplest form.
+If implementation warrents for a large number of threads, it should be handled by the lower layer (e.g. OS, VM, CPU...etc) instead of adjusting design to reduce threads.
+
 
 Test setup
 ---
